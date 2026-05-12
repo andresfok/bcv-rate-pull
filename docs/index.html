@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BCV USD/VES Rate API</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+    code, pre { background: #f4f4f4; padding: 0.15rem 0.4rem; border-radius: 4px; }
+    pre { padding: 1rem; overflow-x: auto; }
+    .rate { font-size: 2.5rem; font-weight: 600; margin: 0.5rem 0; }
+    .meta { color: #666; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>BCV USD/VES Rate</h1>
+  <p>Unofficial free API that scrapes the official rate from
+     <a href="https://www.bcv.org.ve/">Banco Central de Venezuela</a> daily at
+     8 PM Venezuela time.</p>
+
+  <div id="live">
+    <div class="rate" id="rate">loading…</div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <h2>Endpoints</h2>
+  <ul>
+    <li><code>GET rate.json</code> — latest rate</li>
+    <li><code>GET history.json</code> — array of all recorded rates</li>
+  </ul>
+
+  <h2>Example: fetch from JavaScript</h2>
+  <pre>fetch('rate.json')
+  .then(r =&gt; r.json())
+  .then(d =&gt; console.log(`1 USD = ${d.rate} VES (on ${d.date_ve})`));</pre>
+
+  <script>
+    fetch('rate.json', { cache: 'no-cache' })
+      .then(r => r.json())
+      .then(d => {
+        document.getElementById('rate').textContent =
+          `1 USD = ${Number(d.rate).toLocaleString('es-VE', { minimumFractionDigits: 4 })} VES`;
+        document.getElementById('meta').textContent =
+          `Date (VE): ${d.date_ve} · Fetched: ${d.fetched_at_utc}`;
+      })
+      .catch(e => {
+        document.getElementById('rate').textContent = 'No data yet.';
+        document.getElementById('meta').textContent = 'Run the workflow at least once.';
+      });
+  </script>
+</body>
+</html>
