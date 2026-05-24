@@ -1,8 +1,8 @@
 {
   "currency_pair": "USD/VES",
   "rate": "530.50470000",
-  "date_ve": "2026-05-23",
-  "fetched_at_utc": "2026-05-23T04:02:30.724835+00:00",
+  "date_ve": "2026-05-24",
+  "fetched_at_utc": "2026-05-24T04:22:58.003545+00:00",
   "source": "Banco Central de Venezuela",
   "source_url": "https://www.bcv.org.ve/"
 }
